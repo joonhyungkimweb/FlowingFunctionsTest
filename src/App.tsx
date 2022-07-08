@@ -1,9 +1,9 @@
-import Graph from './components/Graph';
+import Flow from './components/Flow';
 
 export default function App() {
   return (
-    <div className="App">
-      <Graph />
+    <div className="App" style={{ height: '100vh' }}>
+      <Flow />
     </div>
   );
 }
