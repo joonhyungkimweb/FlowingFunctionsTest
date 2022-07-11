@@ -43,14 +43,14 @@ function Flow() {
       {
         id: '2',
         data: { updateNodeScript },
-        position: { x: 5, y: 150 },
+        position: { x: 5, y: 200 },
         draggable: false,
         type: 'functionNode',
       },
       {
         id: '3',
         data: { updateNodeScript },
-        position: { x: 5, y: 300 },
+        position: { x: 5, y: 400 },
         draggable: false,
         type: 'functionNodeOutput',
       },

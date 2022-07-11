@@ -6,6 +6,7 @@ import {
   FunctionNodeComponentProps,
   componentRunner,
 } from '../types/functionNode';
+import '../styles/css/functionNode.css';
 
 export default <p extends FunctionNodeComponentProps>({
   Component = null,
@@ -42,6 +43,7 @@ export default <p extends FunctionNodeComponentProps>({
           {Component && (
             <Component {...(props as p)} runner={componentRunner} />
           )}
+          <p> data </p>
           <textarea
             cols={55}
             rows={8}
