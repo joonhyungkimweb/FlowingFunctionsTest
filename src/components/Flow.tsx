@@ -13,7 +13,7 @@ import ReactFlow, {
   useReactFlow,
 } from 'react-flow-renderer';
 
-import FuntionNode from './FuntionNode';
+import withFunctionNode from '../HOC/withFunctionNode';
 
 const fitViewOptions: FitViewOptions = {
   padding: 0.2,
@@ -64,9 +64,13 @@ function Flow() {
 
   const nodeTypes = useMemo(
     () => ({
-      functionNode: FuntionNode,
-      functionNodeInput: FuntionNode,
-      functionNodeOutput: FuntionNode,
+      functionNode: withFunctionNode({}),
+      functionNodeInput: withFunctionNode({
+        nodeOptions: { input: false, output: true },
+      }),
+      functionNodeOutput: withFunctionNode({
+        nodeOptions: { input: true, output: false },
+      }),
     }),
     [],
   );
