@@ -43,22 +43,38 @@ function Flow() {
       {
         id: '2',
         data: { updateNodeScript },
-        position: { x: 5, y: 200 },
+        position: { x: 505, y: 5 },
+        draggable: false,
+        type: 'functionNodeInput',
+      },
+      {
+        id: '3',
+        data: { updateNodeScript, inputs: ['x', 'y'] },
+        position: { x: 252.5, y: 200 },
         draggable: false,
         type: 'functionNode',
       },
       {
-        id: '3',
+        id: '4',
         data: { updateNodeScript },
-        position: { x: 5, y: 400 },
+        position: { x: 755, y: 200 },
+        draggable: false,
+        type: 'functionNodeInput',
+      },
+      {
+        id: '5',
+        data: { updateNodeScript, inputs: ['data', 'model'] },
+        position: { x: 505, y: 400 },
         draggable: false,
         type: 'functionNodeOutput',
       },
     ]);
 
     setEdges([
-      { id: 'e1-2', source: '1', target: '2' },
-      { id: 'e2-3', source: '2', target: '3' },
+      { id: 'e1-3', source: '1', target: '3', label: 'x' },
+      { id: 'e2-3', source: '2', target: '3', label: 'y' },
+      { id: 'e3-5', source: '3', target: '5', label: 'data' },
+      { id: 'e4-5', source: '4', target: '5', label: 'model' },
     ]);
   }, []);
 

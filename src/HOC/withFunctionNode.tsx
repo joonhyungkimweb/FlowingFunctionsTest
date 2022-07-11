@@ -18,15 +18,20 @@ export default <p extends FunctionNodeComponentProps>({
     const customScript = useRef<CustomScript>((script: string) => script);
     const { getEdges, getNode } = useReactFlow();
 
-    const findCurrent = (currentId: string) =>
-      getEdges().find(({ target }) => target === currentId);
+    const findEgdes = (currentId: string) =>
+      getEdges().filter(({ target }) => target === currentId);
 
     const runPrevScript = async (currentId: string): Promise<any> => {
       const currentNode = getNode(currentId);
-      const currentScript = makeFuntion(currentNode?.data.script || '');
-      const { source: prevId } = findCurrent(currentId) || {};
-      if (prevId == null) return await currentScript();
-      return await currentScript(await runPrevScript(prevId));
+      const currentScript = makeFuntion(
+        currentNode?.data.script || '',
+        currentNode?.data.inputs,
+      );
+      const edges = findEgdes(currentId);
+      if (edges.length === 0) return await currentScript([]);
+      return await currentScript(
+        await Promise.all(edges.map(({ source }) => runPrevScript(source))),
+      );
     };
 
     const onChange = useCallback(
