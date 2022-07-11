@@ -4,7 +4,7 @@ import { makeFuntion } from '../modules/functionRunner';
 import {
   FunctionNodeProps,
   FunctionNodeComponentProps,
-  componentRunner,
+  CustomScript,
 } from '../types/functionNode';
 import '../styles/css/functionNode.css';
 
@@ -15,7 +15,7 @@ export default <p extends FunctionNodeComponentProps>({
 }: FunctionNodeProps<p>) => {
   const FunctionNode = ({ data, id }: NodeProps) => {
     const textRef = useRef(null);
-    const componentRunner = useRef<componentRunner>(() => null);
+    const customScript = useRef<CustomScript>((script: string) => script);
     const { getEdges, getNode } = useReactFlow();
 
     const findCurrent = (currentId: string) =>
@@ -31,7 +31,7 @@ export default <p extends FunctionNodeComponentProps>({
 
     const onChange = useCallback(
       (e: ChangeEvent<HTMLTextAreaElement>) => {
-        data.updateNodeScript(e.currentTarget.value, id);
+        data.updateNodeScript(customScript.current(e.currentTarget.value), id);
       },
       [data.updateNodeScript, id],
     );
@@ -41,9 +41,9 @@ export default <p extends FunctionNodeComponentProps>({
         {input && <Handle type="target" position={Position.Top} />}
         <div className="function-node">
           {Component && (
-            <Component {...(props as p)} runner={componentRunner} />
+            <Component {...(props as p)} id={id} runner={customScript} />
           )}
-          <p> data </p>
+          <p> script </p>
           <textarea
             cols={55}
             rows={8}
@@ -53,10 +53,7 @@ export default <p extends FunctionNodeComponentProps>({
           <button
             onClick={async () => {
               const scriptResult = await runPrevScript(id);
-              console.log(
-                scriptResult,
-                await componentRunner.current(scriptResult),
-              );
+              console.log(scriptResult);
             }}
           >
             실행

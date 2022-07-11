@@ -1,6 +1,6 @@
 import { ComponentType, MutableRefObject } from 'react';
 
-type componentRunner = (input: any) => any;
+type CustomScript = (string) => string;
 
 interface FunctionNodeComponentProps {
   runner: MutableRefObject<componentRunner>;
@@ -14,4 +14,4 @@ interface FunctionNodeProps<p extends FunctionNodeComponentProps> {
   };
 }
 
-export { componentRunner, FunctionNodeProps, FunctionNodeComponentProps };
+export { CustomScript, FunctionNodeProps, FunctionNodeComponentProps };
