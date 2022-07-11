@@ -1,11 +1,17 @@
-import { ComponentType } from 'react';
+import { ComponentType, MutableRefObject } from 'react';
 
 import { useRef, useCallback, ChangeEvent } from 'react';
 import { Handle, Position, NodeProps, useReactFlow } from 'react-flow-renderer';
 import { makeFuntion } from '../modules/functionRunner';
 
+type componentRunner = (input: any) => any;
+
+interface FunctionNodeComponentProps {
+  runner: MutableRefObject<componentRunner>;
+}
+
 interface FunctionNodeProps {
-  Component?: ComponentType | null;
+  Component?: ComponentType<FunctionNodeComponentProps> | null;
   nodeOptions?: {
     input: boolean;
     output: boolean;
@@ -15,10 +21,10 @@ interface FunctionNodeProps {
 export default ({
   Component = null,
   nodeOptions: { input, output } = { input: true, output: true },
-  ...props
 }: FunctionNodeProps) => {
-  const FunctionNode = ({ data, type, id }: NodeProps) => {
+  const FunctionNode = ({ data, id }: NodeProps) => {
     const textRef = useRef(null);
+    const componentRunner = useRef<componentRunner>(() => null);
     const { getEdges, getNode } = useReactFlow();
 
     const findCurrent = (currentId: string) =>
@@ -43,7 +49,7 @@ export default ({
       <>
         {input && <Handle type="target" position={Position.Top} />}
         <div className="function-node">
-          {Component && <Component {...props} />}
+          {Component && <Component runner={componentRunner} />}
           <textarea
             cols={55}
             rows={8}
@@ -52,7 +58,11 @@ export default ({
           ></textarea>
           <button
             onClick={async () => {
-              console.log(await runPrevScript(id));
+              const scriptResult = await runPrevScript(id);
+              console.log(
+                scriptResult,
+                await componentRunner.current(scriptResult),
+              );
             }}
           >
             실행
