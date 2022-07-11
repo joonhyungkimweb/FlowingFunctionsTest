@@ -4,6 +4,7 @@ type CustomScript = (string) => string;
 
 interface FunctionNodeComponentProps {
   runner: MutableRefObject<componentRunner>;
+  id: string;
 }
 
 interface FunctionNodeProps<p extends FunctionNodeComponentProps> {
