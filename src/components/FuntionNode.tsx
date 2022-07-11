@@ -1,10 +1,6 @@
 import { useRef, useCallback, ChangeEvent } from 'react';
 import { Handle, Position, NodeProps, useReactFlow } from 'react-flow-renderer';
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
-
-const makeFuntion = (script: string) => (input?: any) =>
-  new AsyncFunction('input', script)(input);
+import { makeFuntion } from '../modules/functionRunner';
 
 export default function FuntionNode({ data, type, id }: NodeProps) {
   const textRef = useRef(null);
