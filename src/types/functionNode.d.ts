@@ -6,8 +6,8 @@ interface FunctionNodeComponentProps {
   runner: MutableRefObject<componentRunner>;
 }
 
-interface FunctionNodeProps {
-  Component?: ComponentType<FunctionNodeComponentProps> | null;
+interface FunctionNodeProps<p extends FunctionNodeComponentProps> {
+  Component?: ComponentType<p> | null;
   nodeOptions?: {
     input: boolean;
     output: boolean;

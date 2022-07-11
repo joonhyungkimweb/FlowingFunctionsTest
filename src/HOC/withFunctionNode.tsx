@@ -1,12 +1,17 @@
 import { useRef, useCallback, ChangeEvent } from 'react';
 import { Handle, Position, NodeProps, useReactFlow } from 'react-flow-renderer';
 import { makeFuntion } from '../modules/functionRunner';
-import { FunctionNodeProps, componentRunner } from '../types/functionNode';
+import {
+  FunctionNodeProps,
+  FunctionNodeComponentProps,
+  componentRunner,
+} from '../types/functionNode';
 
-export default ({
+export default <p extends FunctionNodeComponentProps>({
   Component = null,
   nodeOptions: { input, output } = { input: true, output: true },
-}: FunctionNodeProps) => {
+  ...props
+}: FunctionNodeProps<p>) => {
   const FunctionNode = ({ data, id }: NodeProps) => {
     const textRef = useRef(null);
     const componentRunner = useRef<componentRunner>(() => null);
@@ -34,7 +39,9 @@ export default ({
       <>
         {input && <Handle type="target" position={Position.Top} />}
         <div className="function-node">
-          {Component && <Component runner={componentRunner} />}
+          {Component && (
+            <Component {...(props as p)} runner={componentRunner} />
+          )}
           <textarea
             cols={55}
             rows={8}
