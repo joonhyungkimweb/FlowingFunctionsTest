@@ -1,22 +1,7 @@
-import { ComponentType, MutableRefObject } from 'react';
-
 import { useRef, useCallback, ChangeEvent } from 'react';
 import { Handle, Position, NodeProps, useReactFlow } from 'react-flow-renderer';
 import { makeFuntion } from '../modules/functionRunner';
-
-type componentRunner = (input: any) => any;
-
-interface FunctionNodeComponentProps {
-  runner: MutableRefObject<componentRunner>;
-}
-
-interface FunctionNodeProps {
-  Component?: ComponentType<FunctionNodeComponentProps> | null;
-  nodeOptions?: {
-    input: boolean;
-    output: boolean;
-  };
-}
+import { FunctionNodeProps, componentRunner } from '../types/functionNode';
 
 export default ({
   Component = null,
