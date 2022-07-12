@@ -15,4 +15,15 @@ interface FunctionNodeProps<p extends FunctionNodeComponentProps> {
   };
 }
 
-export { CustomScript, FunctionNodeProps, FunctionNodeComponentProps };
+interface RendererNode<p extends FunctionNodeComponentProps> {
+  nodeOptions?: {
+    input: boolean;
+  };
+}
+
+export {
+  CustomScript,
+  FunctionNodeProps,
+  FunctionNodeComponentProps,
+  RendererNode,
+};

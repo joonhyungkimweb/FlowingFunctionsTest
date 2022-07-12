@@ -14,6 +14,7 @@ import ReactFlow, {
 } from 'react-flow-renderer';
 
 import withFunctionNode from '../HOC/withFunctionNode';
+import withRendererNode from '../HOC/withRendererNode';
 
 const fitViewOptions: FitViewOptions = {
   padding: 0.2,
@@ -63,10 +64,14 @@ function Flow() {
       },
       {
         id: '5',
-        data: { updateNodeScript, inputs: ['data', 'model'] },
+        data: {
+          updateNodeScript,
+          inputs: ['data', 'model'],
+          targetDocument: '1',
+        },
         position: { x: 505, y: 400 },
         draggable: false,
-        type: 'functionNodeOutput',
+        type: 'rendererNode',
       },
     ]);
 
@@ -86,6 +91,9 @@ function Flow() {
       }),
       functionNodeOutput: withFunctionNode({
         nodeOptions: { input: true, output: false },
+      }),
+      rendererNode: withRendererNode({
+        nodeOptions: { input: true },
       }),
     }),
     [],
