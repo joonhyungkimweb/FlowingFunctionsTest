@@ -1,0 +1,5 @@
+.function-node {
+  border: solid 1px gray; }
+  .function-node div {
+    min-height: 100px;
+    min-width: 100px; }
