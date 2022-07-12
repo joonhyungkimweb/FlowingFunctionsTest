@@ -1,3 +1,5 @@
+import '../styles/css/flow.css';
+
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import ReactFlow, {
   addEdge,
@@ -115,16 +117,18 @@ function Flow() {
   );
 
   return (
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-      fitView
-      fitViewOptions={fitViewOptions}
-      nodeTypes={nodeTypes}
-    />
+    <div className="flow">
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        fitView
+        fitViewOptions={fitViewOptions}
+        nodeTypes={nodeTypes}
+      />
+    </div>
   );
 }
 

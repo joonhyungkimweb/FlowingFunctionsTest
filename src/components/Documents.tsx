@@ -1,3 +1,5 @@
+import '../styles/css/documents.css';
+
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import ReactFlow, {
   addEdge,
@@ -13,13 +15,13 @@ import ReactFlow, {
   useReactFlow,
 } from 'react-flow-renderer';
 
-import withFunctionNode from '../HOC/withFunctionNode';
+import DocumentNode from './nodes/DocumentNode';
 
 const fitViewOptions: FitViewOptions = {
   padding: 0.2,
 };
 
-function Flow() {
+function Documents() {
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
   const { getNodes } = useReactFlow();
@@ -37,40 +39,15 @@ function Flow() {
         id: '1',
         data: { updateNodeScript },
         position: { x: 5, y: 5 },
-        draggable: false,
-        type: 'functionNodeInput',
+        // draggable: false,
+        type: 'documentNode',
       },
-      {
-        id: '2',
-        data: { updateNodeScript },
-        position: { x: 5, y: 200 },
-        draggable: false,
-        type: 'functionNode',
-      },
-      {
-        id: '3',
-        data: { updateNodeScript },
-        position: { x: 5, y: 400 },
-        draggable: false,
-        type: 'functionNodeOutput',
-      },
-    ]);
-
-    setEdges([
-      { id: 'e1-2', source: '1', target: '2' },
-      { id: 'e2-3', source: '2', target: '3' },
     ]);
   }, []);
 
   const nodeTypes = useMemo(
     () => ({
-      functionNode: withFunctionNode({}),
-      functionNodeInput: withFunctionNode({
-        nodeOptions: { input: false, output: true },
-      }),
-      functionNodeOutput: withFunctionNode({
-        nodeOptions: { input: true, output: false },
-      }),
+      documentNode: DocumentNode,
     }),
     [],
   );
@@ -91,23 +68,25 @@ function Flow() {
   );
 
   return (
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-      fitView
-      fitViewOptions={fitViewOptions}
-      nodeTypes={nodeTypes}
-    />
+    <div className="documents">
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        fitView
+        fitViewOptions={fitViewOptions}
+        nodeTypes={nodeTypes}
+      />
+    </div>
   );
 }
 
 export default function FlowWithProvider() {
   return (
     <ReactFlowProvider>
-      <Flow />
+      <Documents />
     </ReactFlowProvider>
   );
 }
